@@ -1,0 +1,7 @@
+[package]
+name = "g13_rust"
+version = "0.1.0"
+authors = ["vhsw <nevermind1025@gmail.com>"]
+
+[dependencies]
+libusb = "0.3"
