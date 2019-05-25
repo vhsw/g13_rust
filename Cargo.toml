@@ -5,3 +5,4 @@ authors = ["vhsw <nevermind1025@gmail.com>"]
 
 [dependencies]
 libusb = "0.3"
+uinput = "0.1.3"
