@@ -2,7 +2,7 @@
 
 ## Features
 
-- [*] Keyboard events
-- [*] Joystick events
-- [*] Custom key maps
+- [x] Keyboard events
+- [x] Joystick events
+- [x] Custom key maps
 - [ ] Display
