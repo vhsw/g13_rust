@@ -1,8 +1,12 @@
 [package]
 name = "g13_rust"
 version = "0.1.0"
-authors = ["vhsw <nevermind1025@gmail.com>"]
+authors = ["Alexey Dubrov <nevermind1025@gmail.com>"]
 
 [dependencies]
 libusb = "0.3"
 uinput = "0.1.3"
+toml = "0.5"
+serde = "1.0.91"
+serde_derive = "1.0.91"
+clap = "2.33.0"

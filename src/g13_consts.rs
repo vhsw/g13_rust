@@ -3,7 +3,6 @@ pub const PRODUCT_ID: u16 = 0xc21c;
 
 pub const REPORT_SIZE: usize = 8;
 pub const KEY_READ_TIMEOUT: u64 = 0;
-
 pub const KEY_ENDPOINT: u8 = 1;
 pub const INTERFACE: u8 = 0;
 pub const SETTING: u8 = 0;
@@ -11,10 +10,47 @@ pub const ADDRESS: u8 = 129;
 
 //pub const LCD_ENDPOINT: usize = 2;
 //pub const LCD_BUFFER_SIZE: usize = 0x3c0;
-//pub const NUM_KEYS: usize = 40;
 //pub const LCD_COLUMNS: usize = 160;
 //pub const LCD_ROWS: usize = 48;
 //pub const LCD_BYTES_PER_ROW: usize = LCD_COLUMNS/8;
 //pub const LCD_BUF_SIZE: usize = LCD_ROWS * LCD_BYTES_PER_ROW;
 //pub const LCD_TEXT_CHEIGHT: usize = 8;
 //pub const LCD_TEXT_ROWS: usize = 160 / LCD_TEXT_CHEIGHT;
+
+pub const DEFAULT_MAP: &str = r#"
+G1 = ["esc"]
+G2 = ["tab"]
+G3 = ["q"]
+G4 = ["w"]
+G5 = ["e"]
+G6 = ["r"]
+G7 = ["t"]
+# G8 = 
+# G9 = 
+G10 = ["a"]
+G11 = ["s"]
+G12 = ["d"]
+G13 = ["f"]
+G14 = ["g"]
+G15 = ["lshift"]
+G16 = ["z"]
+G17 = ["x"]
+G18 = ["c"]
+G19 = ["v"]
+G20 = ["lctrl"]
+G21 = ["lctrl", "lshift"]
+G22 = ["lalt"]
+# M1 = 
+# M2 = 
+# M3 = 
+# MR = 
+# M0 = 
+# D1 = 
+# D2 = 
+# D3 = 
+# D4 = 
+# BK = 
+# J1 = 
+# J2 = 
+# J3 = 
+"#;

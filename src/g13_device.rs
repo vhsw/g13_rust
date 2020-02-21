@@ -1,6 +1,6 @@
 extern crate libusb;
 
-use g13_keyboard;
+use g13_uinput;
 use std::time::Duration;
 
 struct Endpoint {
@@ -10,13 +10,13 @@ struct Endpoint {
     address: u8,
 }
 
-pub fn connect(vid: u16, pid: u16) {
+pub fn connect(vid: u16, pid: u16, g13_state: &mut ::G13State) {
     match libusb::Context::new() {
         Ok(mut context) => match open_device(&mut context, vid, pid) {
             // Some((mut device, device_desc, mut handle)) => {
             //     read_device(&mut device, &device_desc, &mut handle).unwrap()
             // }
-            Some((_, _, mut handle)) => read_device(&mut handle).unwrap(),
+            Some((_, _, mut handle)) => read_device(&mut handle, g13_state).unwrap(),
             None => panic!("Could not find device"),
         },
         Err(e) => panic!("Could not initialize libusb: {}", e),
@@ -55,9 +55,8 @@ fn open_device(
 }
 
 fn read_device(
-    // device: &mut libusb::Device,
-    // device_desc: &libusb::DeviceDescriptor,
     handle: &mut libusb::DeviceHandle,
+    g13_state:  &mut ::G13State
 ) -> libusb::Result<()> {
     try!(handle.reset());
 
@@ -67,11 +66,11 @@ fn read_device(
         setting: ::g13_consts::SETTING,
         address: ::g13_consts::ADDRESS,
     };
-    read_endpoint(handle, endpoint);
+    read_endpoint(handle, endpoint, g13_state);
     Ok(())
 }
 
-fn read_endpoint(handle: &mut libusb::DeviceHandle, endpoint: Endpoint) {
+fn read_endpoint(handle: &mut libusb::DeviceHandle, endpoint: Endpoint, g13_state: &mut ::G13State) {
     let has_kernel_driver = match handle.kernel_driver_active(endpoint.iface) {
         Ok(true) => {
             handle.detach_kernel_driver(endpoint.iface).ok();
@@ -83,11 +82,10 @@ fn read_endpoint(handle: &mut libusb::DeviceHandle, endpoint: Endpoint) {
         Ok(_) => {
             let mut report = [0; ::g13_consts::REPORT_SIZE];
             let timeout = Duration::from_micros(::g13_consts::KEY_READ_TIMEOUT);
-            let mut device = g13_keyboard::create_device();
             loop {
                 match handle.read_interrupt(endpoint.address, &mut report, timeout) {
                     Ok(_) => {
-                        g13_keyboard::parse_report(report, &mut device);
+                        g13_uinput::process_report(report, g13_state);
                     }
                     Err(err) => match err {
                         libusb::Error::Timeout => continue,
